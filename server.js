@@ -7,7 +7,9 @@ const authRoute = require('./authentication/authentication');
 
 server.use(cors());
 server.use(helmet());
-server.use(express.json())
+server.use(express.json());
+
+server.use('/auth', authRoute);
 
 server.get('/', (req, res) => {
     res.send('Welcome to Wonderlist');
