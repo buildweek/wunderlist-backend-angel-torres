@@ -1,0 +1,28 @@
+{
+  "name": "wunderlist-backend-angel-torres",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "server": "nodemon index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/buildweek/wunderlist-backend-angel-torres.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/buildweek/wunderlist-backend-angel-torres/issues"
+  },
+  "homepage": "https://github.com/buildweek/wunderlist-backend-angel-torres#readme",
+  "dependencies": {
+    "dotenv": "^6.2.0",
+    "express": "^4.16.4",
+    "knex": "^0.16.3",
+    "nodemon": "^1.18.10",
+    "sqlite3": "^4.0.6"
+  }
+}
