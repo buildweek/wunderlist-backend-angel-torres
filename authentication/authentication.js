@@ -54,7 +54,7 @@ route.post('/login', async (req, res) => {
             } else {
                 res.status(400).json({message:"invalid credentials"});
             }
-        } catch {
+        } catch (error) {
             res.status(500).json({message:"something went wrong"})
         }
     } else {
