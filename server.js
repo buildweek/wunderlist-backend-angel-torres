@@ -9,9 +9,9 @@ server.use(cors());
 server.use(helmet());
 server.use(express.json());
 
-server.use('/auth', authRoute);
+server.use('/api/auth', authRoute);
 
-server.get('/', (req, res) => {
+server.get('/api', (req, res) => {
     res.send('Welcome to Wonderlist');
 });
 
