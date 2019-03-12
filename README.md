@@ -219,12 +219,6 @@
 ```
 {
     "id": 1,
-    "title": "new list",
-    "description": "new lissdt",
-    "dueDate": "04/02/2019",
-    "completed": 0,
-    "userId": 7,
-    "createdAt": "2019-03-12 22:50:04"
 }
   ```
 ##### 400 (bad request)

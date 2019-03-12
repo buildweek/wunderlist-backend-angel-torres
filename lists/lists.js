@@ -51,8 +51,7 @@ route.post('/', restricted, async (req, res) => {
     if (list.title && list.description) {
         try {
             const [id] = await db('lists').insert(list);
-            const newList = await db('lists').where({id}).first()
-            res.status(201).json(newList);
+            res.status(201).json({id});
         } catch (error) {
             res.status(500).json(error)
         }
