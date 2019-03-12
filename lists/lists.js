@@ -25,7 +25,7 @@ function restricted(req, res, next) {
 route.get('/', restricted, async (req, res) => {
     try {
         const lists = await db('lists');
-        res.status(200).json({lists:lists, userId:req.decodedJwt.userId});
+        res.status(200).json(lists);
     } catch (error) {
         res.status(500).json({error});
     }
@@ -38,14 +38,15 @@ route.post('/', restricted, async (req, res) => {
     if (list.title && list.description && list.userId) {
         try {
             const [id] = await db('lists').insert(list);
-            const list = await db('lists').where({id}).first();
-            res.status(400).json(list);
+            res.status(400).json(id);
         } catch (error) {
             res.status(500).json(error)
         }
     } else {
         res.status(400).json({message:"please provide title and description"})
     }
-})
+});
+
+
 
 module.exports = route;

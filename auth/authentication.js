@@ -32,8 +32,7 @@ route.post('/register', async (req, res) => {
             const hash = bcryptjs.hashSync(user.password, 14);
             user.password = hash;
             const [id] = await db('users').insert(user);
-            const newUser = await db('users').where({id}).first();
-            res.status(200).json({username: newUser.username, id: newUser.id});
+            res.status(200).json({id});
         } catch (error) {
             res.status(500).json({message: error})
         }
