@@ -10,7 +10,7 @@ server.use(cors());
 server.use(helmet());
 server.use(express.json());
 
-server.use('/api/auth', authRoute);
+server.use('/api', authRoute);
 server.use('/api/lists', listsRoute);
 
 server.get('/api', (req, res) => {

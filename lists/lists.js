@@ -22,7 +22,7 @@ function restricted(req, res, next) {
     }
 };
 
-route.get('/', restricted, async (req, res) => {
+route.get('/all', restricted, async (req, res) => {
     // If logged in. Returns list of all lists
     try {
         const lists = await db('lists');
@@ -32,6 +32,16 @@ route.get('/', restricted, async (req, res) => {
     }
 
 });
+
+route.get('/:id', restricted, async (req, res) => {
+    // If logged in, returns list of all lists from specified
+    try {
+        const lists = await db('lists').where({userId:req.params.id})
+        res.status(200).json(lists)
+    } catch (error) {
+        res.status(500).json(error)
+    }
+})
 
 route.post('/', restricted, async (req, res) => {
     // posts a new list to database
@@ -54,7 +64,7 @@ route.post('/', restricted, async (req, res) => {
 //     const list = req.body;
 //     list.userId = req.decodedJwt.userId;
 //     try {
-//         const toUpdate = await db()
+//         const toUpdate = await db('lists').where({id:list.userId})
 //     } catch (error) {
         
 //     }
@@ -65,12 +75,12 @@ route.put('/:id', restricted, async (req, res) => {
     const list = req.body;
     list.completed = false;
     list.userId = req.decodedJwt.userId;
-    const toUpdate = await db('lists').where({id:req.params.id});
+    const toUpdate = await db('lists').where({id:req.params.id}).first();
     if (toUpdate.userId === list.userId) {
         if (list.title && list.description && list.dueDate) {
             try {
                 const updated = await db('lists').where({id:req.params.id}).update(list);
-                res.status(200).json(list.userId);
+                res.status(200).json(updated);
             } catch (error) {
                 res.status(500).json(error)
             }
