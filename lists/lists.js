@@ -20,9 +20,10 @@ function restricted(req, res, next) {
             }
         });
     }
-}
+};
 
 route.get('/', restricted, async (req, res) => {
+    // If logged in. Returns list of all lists
     try {
         const lists = await db('lists');
         res.status(200).json(lists);
@@ -33,9 +34,10 @@ route.get('/', restricted, async (req, res) => {
 });
 
 route.post('/', restricted, async (req, res) => {
+    // posts a new list to database
     const list = req.body
     list.userId = req.decodedJwt.userId
-    if (list.title && list.description && list.userId) {
+    if (list.title && list.description) {
         try {
             const [id] = await db('lists').insert(list);
             res.status(400).json(id);
@@ -47,6 +49,25 @@ route.post('/', restricted, async (req, res) => {
     }
 });
 
-
+route.put('/:id', restricted, async (req, res) => {
+    const list = req.body;
+    list.completed = false;
+    list.userId = req.decodedJwt.userId;
+    const toUpdate = await db('lists').where({id:req.params.id});
+    if (toUpdate.userId === list.userId) {
+        if (list.title && list.description && list.dueDate) {
+            try {
+                const updated = await db('lists').where({id:req.params.id}).update(list);
+                res.status(200).json(updated);
+            } catch (error) {
+                res.status(500).json(error)
+            }
+        } else {
+            res.status(400).json({message:"please provide list title, description, due date"})
+        }
+    } else {
+        res.status(400).json({message:"you are not authorized"})
+    }
+})
 
 module.exports = route;
