@@ -3,13 +3,15 @@ const helmet = require('helmet');
 const cors = require('cors');
 
 const server = express();
-const authRoute = require('./authentication/authentication');
+const authRoute = require('./auth/authentication');
+const listsRoute = require('./lists/lists')
 
 server.use(cors());
 server.use(helmet());
 server.use(express.json());
 
 server.use('/api/auth', authRoute);
+server.use('/api/lists', listsRoute);
 
 server.get('/api', (req, res) => {
     res.send('Welcome to Wonderlist');

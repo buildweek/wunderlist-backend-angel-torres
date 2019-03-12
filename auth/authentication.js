@@ -10,7 +10,7 @@ const secret = process.env.SECRET || "there are no secrets here"
 
 function generateToken(user) {
     const payload = {
-        subject: user.username
+        userId: user.id
     }
 
     const options = {
@@ -30,7 +30,7 @@ route.post('/register', async (req, res) => {
     if (user.username && user.password) {
         try {
             const hash = bcryptjs.hashSync(user.password, 14);
-            user.password = hash
+            user.password = hash;
             const [id] = await db('users').insert(user);
             const newUser = await db('users').where({id}).first();
             res.status(200).json({username: newUser.username, id: newUser.id});
@@ -40,8 +40,7 @@ route.post('/register', async (req, res) => {
     } else {
         res.status(400).json({message:"please provide username and password"});
     }
-
-})
+});
 
 route.post('/login', async (req, res) => {
     const {username, password} = req.body
