@@ -36,11 +36,12 @@ route.get('/', restricted, async (req, res) => {
 route.post('/', restricted, async (req, res) => {
     // posts a new list to database
     const list = req.body
-    list.userId = req.decodedJwt.userId
+    list.userId = req.decodedJwt.userId;
+    list.completed = false;
     if (list.title && list.description) {
         try {
             const [id] = await db('lists').insert(list);
-            res.status(400).json(id);
+            res.status(400).json(list.userId);
         } catch (error) {
             res.status(500).json(error)
         }
@@ -48,6 +49,17 @@ route.post('/', restricted, async (req, res) => {
         res.status(400).json({message:"please provide title and description"})
     }
 });
+
+function authorized(req, res, next) {
+    const list = req.body;
+    list.userId = req.decodedJwt.userId;
+    try {
+        const toUpdate = await db()
+    } catch (error) {
+        
+    }
+  
+};
 
 route.put('/:id', restricted, async (req, res) => {
     const list = req.body;
@@ -58,7 +70,7 @@ route.put('/:id', restricted, async (req, res) => {
         if (list.title && list.description && list.dueDate) {
             try {
                 const updated = await db('lists').where({id:req.params.id}).update(list);
-                res.status(200).json(updated);
+                res.status(200).json(list.userId);
             } catch (error) {
                 res.status(500).json(error)
             }
