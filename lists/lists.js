@@ -50,16 +50,16 @@ route.post('/', restricted, async (req, res) => {
     }
 });
 
-function authorized(req, res, next) {
-    const list = req.body;
-    list.userId = req.decodedJwt.userId;
-    try {
-        const toUpdate = await db()
-    } catch (error) {
+// function authorized(req, res, next) {
+//     const list = req.body;
+//     list.userId = req.decodedJwt.userId;
+//     try {
+//         const toUpdate = await db()
+//     } catch (error) {
         
-    }
+//     }
   
-};
+// };
 
 route.put('/:id', restricted, async (req, res) => {
     const list = req.body;
