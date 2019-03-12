@@ -22,7 +22,7 @@ function restricted(req, res, next) {
     }
 };
 
-route.get('/all', restricted, async (req, res) => {
+route.get('/', restricted, async (req, res) => {
     // If logged in. Returns list of all lists
     try {
         const lists = await db('lists');
@@ -51,12 +51,13 @@ route.post('/', restricted, async (req, res) => {
     if (list.title && list.description) {
         try {
             const [id] = await db('lists').insert(list);
-            res.status(400).json(list.userId);
+            const newList = await db('lists').where({id}).first()
+            res.status(201).json(newList);
         } catch (error) {
             res.status(500).json(error)
         }
     } else {
-        res.status(400).json({message:"please provide title and description"})
+        res.status(400).json({message:"please provide title, description, and due date"})
     }
 });
 

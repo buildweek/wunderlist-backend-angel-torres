@@ -32,7 +32,7 @@ route.post('/register', async (req, res) => {
             const hash = bcryptjs.hashSync(user.password, 14);
             user.password = hash;
             const [id] = await db('users').insert(user);
-            res.status(200).json({id});
+            res.status(201).json({id});
         } catch (error) {
             res.status(500).json({message: error})
         }
@@ -48,7 +48,7 @@ route.post('/login', async (req, res) => {
             const user = await db('users').where({username}).first();
             if (user && bcryptjs.compareSync(password, user.password)) {
                 const token = generateToken(user);
-                res.status(200).json({token});
+                res.status(201).json({token});
             } else {
                 res.status(400).json({message:"invalid credentials"});
             }
