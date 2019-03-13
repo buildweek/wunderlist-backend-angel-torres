@@ -9,7 +9,6 @@ const secret = process.env.SECRET || "there are no secrets here"
 
 function restricted(req, res, next) {
     const token = req.headers.authorization;
-
     if(token) {
         jwt.verify(token, secret, (err, decodedToken) => {
             if(err) {
@@ -41,7 +40,7 @@ route.get('/:id', restricted, async (req, res) => {
     } catch (error) {
         res.status(500).json(error)
     }
-})
+});
 
 route.post('/', restricted, async (req, res) => {
     // posts a new list to database
@@ -60,23 +59,23 @@ route.post('/', restricted, async (req, res) => {
     }
 });
 
-// function authorized(req, res, next) {
-//     const list = req.body;
-//     list.userId = req.decodedJwt.userId;
-//     try {
-//         const toUpdate = await db('lists').where({id:list.userId})
-//     } catch (error) {
-        
-//     }
-  
-// };
-
-route.put('/:id', restricted, async (req, res) => {
+authorize = async (req, res, next) => {
     const list = req.body;
-    list.completed = false;
-    list.userId = req.decodedJwt.userId;
-    const toUpdate = await db('lists').where({id:req.params.id}).first();
-    if (toUpdate.userId === list.userId) {
+    list.userId = req.decodedJwt.userId
+    try {
+        const toUpdate = await db('lists').where({id:req.params.id}).first();
+        if (toUpdate.userId === list.userId) {
+            next();
+        } else {
+            res.status(400).json({message:"you are not authorized"})
+        }
+    } catch (error) {
+        res.status(500).json(error)
+    }
+}
+
+route.put('/:id', restricted, authorize, async (req, res) => {
+        const list = req.body;
         if (list.title && list.description && list.dueDate) {
             try {
                 const updated = await db('lists').where({id:req.params.id}).update(list);
@@ -87,9 +86,7 @@ route.put('/:id', restricted, async (req, res) => {
         } else {
             res.status(400).json({message:"please provide list title, description, due date"})
         }
-    } else {
-        res.status(400).json({message:"you are not authorized"})
-    }
-})
+});
+
 
 module.exports = route;
