@@ -86,7 +86,16 @@ route.put('/:id', restricted, authorize, async (req, res) => {
         } else {
             res.status(400).json({message:"please provide list title, description, due date"})
         }
-});
+    });
+    
+    route.delete('/:id', restricted, authorize, async (req, res) => {
+        try {
+            const deleted = await db('lists').where({id:req.params.id}).delete();
+            res.status(204).end();
+    } catch (error) {
+        res.status(500).json(error)
+    }
+})
 
 
 module.exports = route;

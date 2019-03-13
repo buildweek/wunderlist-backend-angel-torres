@@ -228,6 +228,7 @@
 }
 ```
 
+
 -----------------------------------------------------------------------------
 
   ### **Update List On Database**
@@ -269,3 +270,21 @@
     "message": "please provide title, description, and due date"
 }
 ```
+-----------------------------------------------------------------------------
+
+  ### **Delete List On Database**
+*method url*: `/api/lists/:listId`
+
+*http method*: **[DELETE]**
+
+#### Headers
+
+| name           | type   | required | description              |
+| -------------- | ------ | -------- | ------------------------ |
+| `Content-Type` | String | Yes      | Must be application/json |
+|`Authorization` | String | Yes      | Must include token       | 
+
+
+#### Response
+##### 204 (no content)
+
