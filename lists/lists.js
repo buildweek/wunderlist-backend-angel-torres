@@ -1,6 +1,7 @@
 const express = require("express");
 const route = express.Router();
 const jwt = require("jsonwebtoken");
+const cors = require("cors");
 
 const db = require("../data/knexConfig");
 
