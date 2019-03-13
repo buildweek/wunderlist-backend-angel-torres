@@ -79,7 +79,7 @@ route.put('/:id', restricted, authorize, async (req, res) => {
         if (list.title && list.description && list.dueDate) {
             try {
                 const updated = await db('lists').where({id:req.params.id}).update(list);
-                res.status(200).json(updated);
+                res.status(204).end();
             } catch (error) {
                 res.status(500).json(error)
             }

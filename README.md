@@ -228,3 +228,44 @@
 }
 ```
 
+-----------------------------------------------------------------------------
+
+  ### **Update List On Database**
+*method url*: `/api/lists/:listId`
+
+*http method*: **[PUT]**
+
+#### Headers
+
+| name           | type   | required | description              |
+| -------------- | ------ | -------- | ------------------------ |
+| `Content-Type` | String | Yes      | Must be application/json |
+|`Authorization` | String | Yes      | Must include token       | 
+
+#### Body
+
+| name           | type   | required | description              |
+| -------------- | ------ | -------- | ------------------------ |
+| `title`        | String | Yes      |                          |
+| `description`  | String | Yes      |                          |
+| `dueDate`      | String | Yes      |                          |
+
+
+#### Example
+```
+  {
+    "title": "new lsis",
+    "description": "new lissdt",
+    "dueDate": "04/02/2019"
+  }
+  ```
+
+#### Response
+##### 204 (no content)
+
+##### 400 (bad request)
+```
+{
+    "message": "please provide title, description, and due date"
+}
+```
