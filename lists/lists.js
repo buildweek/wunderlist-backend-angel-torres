@@ -17,6 +17,8 @@ function restricted(req, res, next) {
         next();
       }
     });
+  } else {
+      res.status(400).json({message:"you must provide token"})
   }
 }
 
