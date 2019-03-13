@@ -22,7 +22,8 @@ function generateToken(user) {
 
 route.get('/users', async (req, res) => {
     const users = await db('users');
-    res.status(200).json(users);
+    const filteredUsers = users.map(u => ({id:u.id, username:u.username}))
+    res.status(200).json(filteredUsers);
 });
 
 route.post('/register', async (req, res) => {
