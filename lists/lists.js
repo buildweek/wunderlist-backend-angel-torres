@@ -1,13 +1,12 @@
 const express = require("express");
 const route = express.Router();
 const jwt = require("jsonwebtoken");
-const cors = require("cors");
 
 const db = require("../data/knexConfig");
 
 const secret = process.env.SECRET || "there are no secrets here";
 
-route.use(cors());
+server.use(cors());
 
 function restricted(req, res, next) {
   const token = req.headers.authorization;
