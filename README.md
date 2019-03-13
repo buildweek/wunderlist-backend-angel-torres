@@ -47,7 +47,7 @@
 --------------------------------------------
 
   ### **Login**
-*method url*: `/api/register`
+*method url*: `/api/login`
 
 *http method*: **[POST]**
 
