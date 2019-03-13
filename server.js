@@ -13,7 +13,7 @@ server.use(express.json());
 server.use('/api', authRoute);
 server.use('/api/lists', listsRoute);
 
-server.get('/api', (req, res) => {
+server.get('/', (req, res) => {
     res.send('Welcome to Wonderlist');
 });
 
