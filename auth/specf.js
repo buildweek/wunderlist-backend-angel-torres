@@ -13,9 +13,8 @@
 //             username:"john",
 //             password:"smith"
 //         }
-//         const addUser = await db('users').insert(newUser);
-//         const userList = await db('users');
-//         //const users = await request(server).get('/users');
-//         expect(users).toEqual({})
+//         // const addUser = await db('users').insert(newUser);
+//         // const userList = await db('users');
+//         const users = await request(server).get('/users');
 //     });
 // });

@@ -35,7 +35,7 @@ route.get("/", restricted, async (req, res) => {
 route.get("/mylists", restricted, async (req, res) => {
   // If logged in, returns list of all lists from specified
   try {
-    const lists = await db("lists").where({userId:req.decodedJwt});
+    const lists = await db("lists").where({userId:req.decodedJwt.userId});
     res.status(200).json(lists);
   } catch (error) {
     res.status(500).json(error);
